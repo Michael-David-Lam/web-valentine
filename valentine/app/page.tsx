@@ -1,10 +1,15 @@
-import QusetionPage from "./components/QuestionPage";
+"use client";
+import Question from "./components/Question";
+import Result from "./components/Result";
+import { useState } from "react";
 
 export default function Home() {
  
+  const [answer, setAnswer] = useState<"Yes" | "No" | null>(null);
 
-  return (
+  if (answer){
+     return(<Result answer={answer} />);
+  }
     
-    <QusetionPage />
-  );
+  return (<Question onAnswer={setAnswer}/>);
 }
