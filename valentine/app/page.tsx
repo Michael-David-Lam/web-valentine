@@ -8,7 +8,7 @@ export default function Home() {
   const [answer, setAnswer] = useState<"Yes" | "No" | null>(null);
 
   if (answer){
-     return(<Result answer={answer} />);
+     return(<Result answer={answer} onBack={() => setAnswer(null)} />);
   }
     
   return (<Question onAnswer={setAnswer}/>);
