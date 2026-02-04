@@ -53,17 +53,17 @@ export default function Qusetion({ onAnswer }: Props) {
             return dist;
         }
         // if close enough, move button
-        console.log('mouse / button - null')
-        return 0;
+        console.log('null')
+        return null;
     };
 
-    return (
+    return ( 
         <div 
             onMouseMove={mouseHandler}
             className="flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200">
-            <h1 className="text-3xl font-bold text-[#9eab74]">Will you be my Valentine? ❤️</h1>
+            <h1 className="flex flex-col gap-8 mb-8 text-3xl font-bold text-[#9eab74] boto">Will you be my Valentine? ❤️</h1>
 
-            <div className="flex gap-4">
+            <div className="flex gap-8">
                 <button type="button" className="rounded-full text-white bg-pink-300
                 hover:bg-pink-400 focus:ring-2 
                  focus:outline-none focus:ring-pink-500 shadow-lg 
