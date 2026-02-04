@@ -42,7 +42,7 @@ export default function Qusetion({ onAnswer }: Props) {
             <h1 className="text-3xl font-bold text-[#9eab74]">Will you be my Valentine? ❤️</h1>
 
             <div className="flex gap-4">
-                <button type="button" className="rounded-full border text-white bg-pink-300
+                <button type="button" className="rounded-full text-white bg-pink-300
                 hover:bg-pink-400 focus:ring-2 
                  focus:outline-none focus:ring-pink-500 shadow-lg 
                  shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 
@@ -52,7 +52,7 @@ export default function Qusetion({ onAnswer }: Props) {
                     Yes
                 </button>
 
-                <button ref={buttonRef} type="button" className="rounded-full border text-white bg-[#9eab74]
+                <button ref={buttonRef} type="button" className="rounded-full text-white bg-[#9eab74]
                 hover:bg-[#556328] focus:ring-2 
                  focus:outline-none focus:ring-[#556328] shadow-lg 
                  shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 

@@ -14,7 +14,7 @@ export default function Result({ answer, onBack }: Props) {
     } 
     else {
         message = "Oh no! Don't break my heart... 😢";
-        buttonText = "Plesase recondisder... :("
+        buttonText = "Please recondisder... :("
     }
     return(
          <div className="flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200">
