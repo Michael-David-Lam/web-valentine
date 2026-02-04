@@ -17,7 +17,10 @@ export default function Qusetion({ onAnswer }: Props) {
     useEffect (() => {
         if (buttonRef.current){
             const rect = buttonRef.current.getBoundingClientRect();
-            setNButtonPos({x: rect.left, y: rect.top});
+            //Find center point for button element (for more intuitive UI calculations)
+            const centerX = rect.left + (rect.width / 2);
+            const centerY = rect.top + (rect.height / 2);
+            setNButtonPos({x: centerX, y: centerY});
         }
     }, []);
 
@@ -35,10 +38,29 @@ export default function Qusetion({ onAnswer }: Props) {
             window.removeEventListener('mousemove', updateMousePos);
         };
     }, []);
+    
+    //Calculates the distance between 2 positions
+    const calcDistance = ({x: x1, y: y1}: Position, {x: x2, y: y2}: Position) => {
+        return Math.round(Math.sqrt((x2-x1)**2 +(y2-y1)**2));   //euclidean distance formula rounded to nearest integer
+    }
 
+    const mouseHandler = () => {
+        //onMouse movement, 
+        //calc distance between mouse and button
+        if (mousePos && nButtonPos){
+            let dist: number = calcDistance(mousePos, nButtonPos);
+            console.log(dist);
+            return dist;
+        }
+        // if close enough, move button
+        console.log('mouse / button - null')
+        return 0;
+    };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200">
+        <div 
+            onMouseMove={mouseHandler}
+            className="flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200">
             <h1 className="text-3xl font-bold text-[#9eab74]">Will you be my Valentine? ❤️</h1>
 
             <div className="flex gap-4">
@@ -57,7 +79,7 @@ export default function Qusetion({ onAnswer }: Props) {
                  focus:outline-none focus:ring-[#556328] shadow-lg 
                  shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 
                  text-sm px-4 py-2.5 text-center leading-5"
-                 onClick={() => onAnswer("No")}
+                 onClick={() => onAnswer("No")} 
                 >
                     No
                 </button>
