@@ -7,11 +7,14 @@ type Props = {
 
 export default function Result({ answer, onBack }: Props) {
     let message: string;
+    let buttonText: string;
     if (answer === "Yes"){
         message = "Yay! 💖";
+        buttonText = "Say yes again?"
     } 
     else {
         message = "Oh no! Don't break my heart... 😢";
+        buttonText = "Plesase recondisder... :("
     }
     return(
          <div className="flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200">
@@ -24,9 +27,9 @@ export default function Result({ answer, onBack }: Props) {
                  text-sm px-4 py-2.5 text-center leading-5"
                  onClick={onBack}
             >
-            Change your answer?
+            {buttonText}
             </button>
          </div>
-    );
+    );  
 
 }
