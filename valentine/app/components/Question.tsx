@@ -9,10 +9,12 @@ type Position = {
     y: number
 }
 
+const TOO_CLOSE = 50;
+
 export default function Qusetion({ onAnswer }: Props) {
     //Track Button location
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const [nButtonPos, setNButtonPos] = useState<Position | null>(null)
+    const [nButtonPos, setNButtonPos] = useState<Position | null>(null);
 
     useEffect (() => {
         if (buttonRef.current){
@@ -42,19 +44,36 @@ export default function Qusetion({ onAnswer }: Props) {
     //Calculates the distance between 2 positions
     const calcDistance = ({x: x1, y: y1}: Position, {x: x2, y: y2}: Position) => {
         return Math.round(Math.sqrt((x2-x1)**2 +(y2-y1)**2));   //euclidean distance formula rounded to nearest integer
-    }
+    };
 
+    //
+    const [offset, setOffset] = useState<Position>({ x: 0, y: 0 });
     const mouseHandler = () => {
-        //onMouse movement, 
-        //calc distance between mouse and button
-        if (mousePos && nButtonPos){
-            let dist: number = calcDistance(mousePos, nButtonPos);
-            console.log(dist);
-            return dist;
+        if (!mousePos || !buttonRef.current){
+                 return;
+        };
+        const rect = buttonRef.current.getBoundingClientRect();
+        //Get center of button
+        const x_center = rect.left + rect.width / 2;
+        const y_center = rect.top + rect.height / 2;
+
+        //Get vector between mouse → button
+        const dx = x_center - mousePos.x;
+        const dy = y_center - mousePos.y;
+
+        //Calc distance between button and mouse
+        const dist = calcDistance(mousePos, {x: x_center, y: y_center});
+        
+        //Calc unit vector (direction)
+        const dx_unit = dx / dist;
+        const dy_unit = dy / dist;
+        
+        if (dist < TOO_CLOSE){
+            setOffset( prev => ({
+                x: prev.x + dx_unit * 10, 
+                y: prev.y + dy_unit * 10
+            }));
         }
-        // if close enough, move button
-        console.log('null')
-        return null;
     };
 
     return ( 
@@ -68,7 +87,7 @@ export default function Qusetion({ onAnswer }: Props) {
                 hover:bg-pink-400 focus:ring-2 
                  focus:outline-none focus:ring-pink-500 shadow-lg 
                  shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 
-                 text-sm px-4 py-2.5 text-center leading-5"
+                 text-sm px-8 py-2.5 text-center leading-5"
                  onClick={() => onAnswer("Yes")}
                 >
                     Yes
@@ -78,15 +97,13 @@ export default function Qusetion({ onAnswer }: Props) {
                 hover:bg-[#556328] focus:ring-2 
                  focus:outline-none focus:ring-[#556328] shadow-lg 
                  shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 
-                 text-sm px-4 py-2.5 text-center leading-5"
-                 onClick={() => onAnswer("No")} 
+                 text-sm px-8 py-2.5 text-center leading-5 transition-transform duration-500 ease-out"
+                 onClick={() => onAnswer("No")}
+                 style={{transform: `translate(${offset.x}px, ${offset.y}px)`}} 
                 >
                     No
                 </button>
-                
             </div>
-            <div>Mouse is at X:{mousePos?.x} and Y: {mousePos?.y}</div>
-            <div>Button is at X:{nButtonPos?.x} and Y: {nButtonPos?.y}</div>
         </div>
     );
 }
