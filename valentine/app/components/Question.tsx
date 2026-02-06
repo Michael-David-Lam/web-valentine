@@ -9,7 +9,9 @@ type Position = {
     y: number
 }
 
-const TOO_CLOSE = 50;
+const TOO_CLOSE = 60;   // Min dist between mouse and
+const BOUNCE_PADDING = 30;  // Amount button bounces back on boundary hit
+const JUMP_AMOUNT = 5;  // Pixel jump/step per button movement 
 
 export default function Qusetion({ onAnswer }: Props) {
     //Track Button location
@@ -69,17 +71,45 @@ export default function Qusetion({ onAnswer }: Props) {
         const dy_unit = dy / dist;
         
         if (dist < TOO_CLOSE){
-            setOffset( prev => ({
-                x: prev.x + dx_unit * 10, 
-                y: prev.y + dy_unit * 10
-            }));
+            setOffset( prev => { 
+                if (!buttonRef.current) {
+                    return prev;
+                }
+                //Pre calc next button movement
+                let nextX =  prev.x + dx_unit * JUMP_AMOUNT;
+                let nextY =  prev.y + dy_unit * JUMP_AMOUNT;
+
+                //Get button bounds after move
+                const rect = buttonRef.current.getBoundingClientRect();
+                const buttonWidth = rect.width;
+                const buttonHeight = rect.height;
+
+
+                const left   = rect.left + dx_unit * JUMP_AMOUNT;
+                const right  = rect.right + dx_unit * JUMP_AMOUNT;
+                const top    = rect.top + dy_unit * JUMP_AMOUNT;
+                const bottom = rect.bottom + dy_unit * JUMP_AMOUNT;
+
+                //Check boundaries
+                if (left < 0 || right > window.innerWidth) {
+                    nextX = prev.x - dx_unit * BOUNCE_PADDING;
+                }
+                if (top < 0 || bottom > window.innerHeight) {
+                    nextY = prev.y - dy_unit * BOUNCE_PADDING;
+                }
+
+                return {
+                    x: nextX,
+                    y: nextY
+                };
+            });
         }
     };
 
     return ( 
         <div 
             onMouseMove={mouseHandler}
-            className="flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200">
+            className="flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
             <h1 className="flex flex-col gap-8 mb-8 text-3xl font-bold text-[#9eab74] boto">Will you be my Valentine? ❤️</h1>
 
             <div className="flex gap-8">
