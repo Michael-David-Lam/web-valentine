@@ -12,6 +12,7 @@ export default function Login() {
 
     const [password, setPassword] = useState(""); 
 
+    // hash the input using sha256
     async function sha256(text: string){
         const input = new TextEncoder().encode(text);
         const hash = await crypto.subtle.digest("SHA-256", input);
@@ -20,6 +21,7 @@ export default function Login() {
             .join("");
     }
 
+    // handle login on click of login button
     const handleLogin = async (): Promise<void> => {
         const hash = await sha256(password);
         if (hash === process.env.NEXT_PUBLIC_SITE_HASH_VALUE) {
@@ -31,14 +33,34 @@ export default function Login() {
         }
     };
     return (
-        <div>
-            <h1>Login</h1>
-            <input 
-                type="password"
-                placeholder="Enter your password"
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button onClick={handleLogin}>Login</button>
+        <div className="flex min-h-screen flex-col bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
+            <div className="flex flex-1 flex-col items-center justify-center gap-6">
+                <h1 className="flex flex-col gap-8 mb-8 text-3xl font-bold text-[#9eab74] boto">
+                    Enter the Secret Password
+                </h1>
+                <input
+                    type="password"
+                    placeholder="Enter the Secret Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                    className="rounded-full px-6 py-2.5 text-sm font-medium shadow-lg shadow-pink-300/50 
+                    focus:outline-none focus:ring-2 focus:ring-pink-200 placeholder:text-pink-300/80 bg-white/90
+                     text-pink-100  border border-pink-100/50"
+
+                />
+                <button
+                    type="button"
+                    onClick={handleLogin}
+                    className="rounded-full text-white bg-pink-300 hover:bg-pink-400 focus:ring-2 focus:outline-none
+                     focus:ring-pink-400 shadow-lg shadow-pink-300/50 dark:shadow-lg dark:shadow-pink-300/80 font-medium text-sm px-8 py-2.5 text-center leading-5"
+                >
+                    Guess
+                </button>
+            </div>
+            <div className="text-sm text-pink-100 pb-6 text-center">
+                <p>Hint: DD/MM/YYYY</p>
+            </div>
         </div>
     );
 }

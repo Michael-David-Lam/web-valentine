@@ -9,7 +9,7 @@ type Position = {
     y: number
 }
 
-const TOO_CLOSE = 100;   // Min dist between mouse and
+const TOO_CLOSE = 45;   // Min dist between mouse and
 const BOUNCE_PADDING = 20;  // Amount button bounces back on boundary hit
 const JUMP_AMOUNT = 2;  // Pixel jump/step per button movement 
 
@@ -114,7 +114,7 @@ export default function Qusetion({ onAnswer }: Props) {
                 hover:bg-pink-400 focus:ring-2 
                  focus:outline-none focus:ring-pink-500 shadow-lg 
                  shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 
-                 text-sm px-8 py-2.5 text-center leading-5"
+                 text-sm px-6 py-2.5 text-center leading-5"
                  onClick={() => onAnswer("Yes")}
                 >
                     Yes
@@ -124,7 +124,7 @@ export default function Qusetion({ onAnswer }: Props) {
                 hover:bg-[#556328] focus:ring-2 
                  focus:outline-none focus:ring-[#556328] shadow-lg 
                  shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 
-                 text-sm px-8 py-2.5 text-center leading-5 transition-transform duration-500 ease-out"
+                 text-sm px-6 py-2.5 text-center leading-5 transition-transform duration-500 ease-out"
                  onClick={() => onAnswer("No")}
                  style={{transform: `translate(${offset.x}px, ${offset.y}px)`}} 
                 >
