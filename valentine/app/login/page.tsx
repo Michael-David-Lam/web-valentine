@@ -10,7 +10,9 @@ const AUTH_COOKIE = "valentine_auth";
 export default function Login() {
   const router = useRouter();
 
-    const [password, setPassword] = useState(""); 
+    const [password, setPassword] = useState("");
+    const [loginFailed, setLoginFailed] = useState(false);
+    const [shake, setShake] = useState(false);
 
     // hash the input using sha256
     async function sha256(text: string){
@@ -29,12 +31,16 @@ export default function Login() {
             document.cookie = `${AUTH_COOKIE}=1; path=/`;
             router.push("/");
         } else {
-            console.log("Login failed");
+            setLoginFailed(true);
+            setShake(true);
         }
     };
     return (
         <div className="flex min-h-screen flex-col bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
-            <div className="flex flex-1 flex-col items-center justify-center gap-6">
+            <div
+                className={`flex flex-1 flex-col items-center justify-center gap-6 ${shake ? "animate-shake" : ""}`}
+                onAnimationEnd={() => setShake(false)}
+            >
                 <h1 className="flex flex-col gap-8 mb-8 text-3xl font-bold text-[#9eab74] boto">
                     Enter the Secret Password
                 </h1>
@@ -42,12 +48,15 @@ export default function Login() {
                     type="password"
                     placeholder="Enter the Secret Password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                        setPassword(e.target.value);
+                        setLoginFailed(false);
+                    }}
                     onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-                    className="rounded-full px-6 py-2.5 text-sm font-medium shadow-lg shadow-pink-300/50 
-                    focus:outline-none focus:ring-2 focus:ring-pink-200 placeholder:text-pink-300/80 bg-white/90
-                     text-pink-100  border border-pink-100/50"
-
+                    className={`rounded-full px-6 py-2.5 text-sm font-medium shadow-lg placeholder:text-pink-300/80 bg-white/90 text-pink-300/80
+                    focus:outline-none focus:ring-2 focus:ring-pink-200
+                    transition-colors duration-200
+                    ${loginFailed ? "border-2 border-red-400 shadow-red-300/50" : "border border-pink-100/50 shadow-pink-300/50"}`}
                 />
                 <button
                     type="button"
