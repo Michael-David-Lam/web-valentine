@@ -9,9 +9,9 @@ type Position = {
     y: number
 }
 
-const TOO_CLOSE = 70;   // Min dist between mouse and
+const TOO_CLOSE = 100;   // Min dist between mouse and
 const BOUNCE_PADDING = 20;  // Amount button bounces back on boundary hit
-const JUMP_AMOUNT = 10;  // Pixel jump/step per button movement 
+const JUMP_AMOUNT = 2;  // Pixel jump/step per button movement 
 
 export default function Qusetion({ onAnswer }: Props) {
     //Track Button location
