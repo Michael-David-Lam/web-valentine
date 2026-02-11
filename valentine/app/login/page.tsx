@@ -3,8 +3,12 @@
 // if hash matches stored hash, redirect to home page
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+const AUTH_COOKIE = "valentine_auth";
 
 export default function Login() {
+  const router = useRouter();
 
     const [password, setPassword] = useState(""); 
 
@@ -19,7 +23,9 @@ export default function Login() {
     const handleLogin = async (): Promise<void> => {
         const hash = await sha256(password);
         if (hash === process.env.NEXT_PUBLIC_SITE_HASH_VALUE) {
-            console.log("Login successful");
+            //document.cookie = `${AUTH_COOKIE}=1; path=/; max-age=86400`;
+            document.cookie = `${AUTH_COOKIE}=1; path=/`;
+            router.push("/");
         } else {
             console.log("Login failed");
         }
