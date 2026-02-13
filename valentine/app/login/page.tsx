@@ -36,40 +36,46 @@ export default function Login() {
         }
     };
     return (
-        <div className="opacity-0 fade-in flex min-h-screen flex-col bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
-            <div
-                className={`flex flex-1 flex-col items-center justify-center gap-6 ${shake ? "animate-shake" : ""}`}
-                onAnimationEnd={() => setShake(false)}
-            >
+        <div className="flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
+            <div className='opacity-0 fade-in'>
                 <h1 className="flex flex-col gap-8 mb-8 text-3xl font-bold text-[#9eab74] boto">
-                    Enter the Secret Password
+                        Enter the Secret Password
                 </h1>
-                <input
-                    type="password"
-                    placeholder="Enter the Secret Password"
-                    value={password}
-                    onChange={(e) => {
-                        setPassword(e.target.value);
-                        setLoginFailed(false);
-                    }}
-                    onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-                    className={`rounded-full px-6 py-2.5 text-sm font-medium shadow-lg placeholder:text-pink-300/80 bg-white/90 text-pink-300/80
-                    focus:outline-none focus:ring-2 focus:ring-pink-200
-                    transition-colors duration-200
-                    ${loginFailed ? "border-2 border-red-400 shadow-red-300/50" : "border border-pink-100/50 shadow-pink-300/50"}`}
-                />
-                <button
-                    type="button"
-                    onClick={handleLogin}
-                    className="rounded-full text-white bg-pink-300 hover:bg-pink-400 focus:ring-2 focus:outline-none
-                     focus:ring-pink-400 shadow-lg shadow-pink-300/50 dark:shadow-lg dark:shadow-pink-300/80 font-medium text-sm px-8 py-2.5 text-center leading-5"
+                <div
+                    className={`flex flex-1 flex-col items-center justify-center gap-6 ${shake ? "animate-shake" : ""}`}
+                    onAnimationEnd={() => setShake(false)}
                 >
-                    Guess
-                </button>
+                    
+                    <input
+                        type="password"
+                        placeholder="Enter the Secret Password"
+                        value={password}
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                            setLoginFailed(false);
+                        }}
+                        onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                        className={`rounded-full px-6 py-2.5 text-sm font-medium shadow-lg placeholder:text-pink-300/80 bg-white/90 text-pink-300/80
+                        focus:outline-none focus:ring-2 focus:ring-pink-200
+                        transition-colors duration-200
+                        ${loginFailed ? "border-2 border-red-400 shadow-red-300/50" : "border border-pink-100/50 shadow-pink-300/50"}`}
+                    />
+                </div>
+                <div className="flex flex-1 flex-col items-center justify-center gap-6 mt-6 ">
+                    <button
+                            type="button"
+                            onClick={handleLogin}
+                            className="rounded-full text-white bg-pink-300 hover:bg-pink-400 focus:ring-2 focus:outline-none
+                            focus:ring-pink-400 shadow-lg shadow-pink-300/50 dark:shadow-lg dark:shadow-pink-300/80 font-medium text-sm px-8 py-2.5 text-center leading-5"
+                        >
+                            Guess
+                    </button>
+                </div>
+                
             </div>
             <div className="text-sm text-pink-100 pb-6 text-center">
-                <p>Hint: DD/MM/YYYY</p>
-            </div>
+                    <p>Hint: DD/MM/YYYY</p>
+                </div>
         </div>
     );
 }

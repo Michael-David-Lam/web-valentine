@@ -1,5 +1,6 @@
 "use client";
 
+// This component animates text falling from the top of the window
 export default function HeartRain() {
 
     const hearts = Array.from({ length: 40 });
@@ -15,10 +16,10 @@ export default function HeartRain() {
                 animationDelay: `${Math.random() * 2}s`,
             }}
             >
-            ❤️
+            💔
             </span>
         ))}
         </div>
     );
-    }      
+ }      
 
