@@ -1,4 +1,7 @@
 "use client";
+import confetti from "canvas-confetti";
+import { useEffect, useState } from 'react';
+import HeartRain from "./HeartRain";
 
 type Props = {
     answer: "Yes" | "No";
@@ -16,20 +19,42 @@ export default function Result({ answer, onBack }: Props) {
         message = "Oh no! Don't break my heart... 😢";
         buttonText = "Please recondisder... :("
     }
+    const [raining, setRaining] = useState(false);
+    useEffect(() => {
+        if (answer === "Yes") {
+          confetti({
+            particleCount: 150,
+            spread: 80,
+            origin: { y: 0.6 },
+          });
+    
+          setRaining(true);
+    
+          const timer = setTimeout(() => {
+            setRaining(false);
+          }, 4000);
+    
+          return () => clearTimeout(timer);
+        }
+      }, [answer]);
+          
     return(
-         <div className="opacity-0 fade-in flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
-            <h1 className="text-3xl font-bold text-[#9eab74]">{message}</h1>
-            <p className="text-xl text-pink-400">You chose {answer}!</p>
-            <button className="rounded-full border text-[#9eab74] bg-pink-200
-                hover:bg-pink-300 focus:ring-2 
-                 focus:outline-none focus:ring-[#9eab74] shadow-lg 
-                 shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 
-                 text-sm px-4 py-2.5 text-center leading-5"
-                 onClick={onBack}
-            >
-            {buttonText}
-            </button>
-         </div>
+        <>
+        {raining && <HeartRain />}
+            <div className="opacity-0 fade-in flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
+                <h1 className="text-3xl font-bold text-[#9eab74]">{message}</h1>
+                <p className="text-xl text-pink-400">You chose {answer}!</p>
+                <button className="rounded-full border text-[#9eab74] bg-pink-200
+                    hover:bg-pink-300 focus:ring-2 
+                    focus:outline-none focus:ring-[#9eab74] shadow-lg 
+                    shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 
+                    text-sm px-4 py-2.5 text-center leading-5"
+                    onClick={onBack}
+                >
+                {buttonText}
+                </button>
+            </div>
+         </>
     );  
 
 }

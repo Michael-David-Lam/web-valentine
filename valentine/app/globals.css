@@ -46,6 +46,15 @@
   animation: fadeIn 0.6s ease forwards;
 }
 
+@keyframes fall {
+  0% { transform: translateY(-10vh); opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0; }
+}
+
+.animate-fall {
+  animation: fall 3s linear forwards;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
