@@ -71,11 +71,11 @@ export default function Login() {
                             Guess
                     </button>
                 </div>
-                
-            </div>
-            <div className="text-sm text-pink-100 pb-6 text-center">
+                <div className="mt-8 text-sm text-pink-100 pb-6 text-center">
                     <p>Hint: DD/MM/YYYY</p>
                 </div>
+            </div>
+            
         </div>
     );
 }
