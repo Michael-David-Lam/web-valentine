@@ -17,7 +17,7 @@ export default function Result({ answer, onBack }: Props) {
         buttonText = "Please recondisder... :("
     }
     return(
-         <div className="flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200">
+         <div className="opacity-0 fade-in flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
             <h1 className="text-3xl font-bold text-[#9eab74]">{message}</h1>
             <p className="text-xl text-pink-400">You chose {answer}!</p>
             <button className="rounded-full border text-[#9eab74] bg-pink-200

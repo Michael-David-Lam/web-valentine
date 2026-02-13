@@ -106,9 +106,10 @@ export default function Qusetion({ onAnswer }: Props) {
     return ( 
         <div 
             onMouseMove={mouseHandler}
-            className="flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
-            <h1 className="flex flex-col gap-8 mb-8 text-3xl font-bold text-[#9eab74] boto">Will you be my Valentine? ❤️</h1>
-
+            className="opacity-0 fade-in flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
+            <h1 className="flex flex-col gap-8 mb-8 text-3xl font-bold text-[#9eab74] boto">
+                Will you be my Valentine? ❤️
+            </h1>
             <div className="flex gap-8">
                 <button type="button" className="rounded-full text-white bg-pink-300
                 hover:bg-pink-400 focus:ring-2 

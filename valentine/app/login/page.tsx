@@ -36,7 +36,7 @@ export default function Login() {
         }
     };
     return (
-        <div className="flex min-h-screen flex-col bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
+        <div className="opacity-0 fade-in flex min-h-screen flex-col bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
             <div
                 className={`flex flex-1 flex-col items-center justify-center gap-6 ${shake ? "animate-shake" : ""}`}
                 onAnimationEnd={() => setShake(false)}
