@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, use } from 'react';
 
 type Props = {
     onAnswer: (value: "Yes" | "No") => void;
@@ -16,15 +16,12 @@ const JUMP_AMOUNT = 2;  // Pixel jump/step per button movement
 export default function Qusetion({ onAnswer }: Props) {
     //Track Button location
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const [nButtonPos, setNButtonPos] = useState<Position | null>(null);
-
     useEffect (() => {
         if (buttonRef.current){
             const rect = buttonRef.current.getBoundingClientRect();
             //Find center point for button element (for more intuitive UI calculations)
             const centerX = rect.left + (rect.width / 2);
             const centerY = rect.top + (rect.height / 2);
-            setNButtonPos({x: centerX, y: centerY});
         }
     }, []);
 
@@ -103,34 +100,57 @@ export default function Qusetion({ onAnswer }: Props) {
         }
     };
 
+    // Counter for 'no' button, have 'fake' presses until final message
+    const [noCount, setNoCount] = useState(0);
+    // Cycle messages
+    const noMessages = [
+        "Are you sure? 😢",
+        "Really sure?? 💔",
+        "Last chance... 🥺",
+    ]
+
     return ( 
         <div 
             onMouseMove={mouseHandler}
             className="flex flex-col items-center justify-center min-h-screen gap-6 bg-linear-to-br from-pink-200 to-red-200 overflow-hidden">
-            <h1 className="flex flex-col gap-8 mb-8 text-3xl font-bold text-[#9eab74] boto">Will you be my Valentine? ❤️</h1>
+            <div className='opacity-0 fade-in'>
+                <h1 className="mb-8 text-3xl font-bold text-[#9eab74] boto">
+                    {noCount === 0
+                        ? "Will you be my Valentine? ❤️"
+                        : noMessages[noCount - 1]
+                    }
+                </h1>
+                <div className="flex gap-8 justify-center">
+                    <button type="button" className="rounded-full text-white bg-pink-300
+                    hover:bg-pink-400 focus:ring-2 
+                    focus:outline-none focus:ring-pink-500 shadow-lg 
+                    shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 
+                    text-sm px-6 py-2.5 text-center leading-5"
+                    onClick={() => onAnswer("Yes")}
+                    >
+                        Yes
+                    </button>
 
-            <div className="flex gap-8">
-                <button type="button" className="rounded-full text-white bg-pink-300
-                hover:bg-pink-400 focus:ring-2 
-                 focus:outline-none focus:ring-pink-500 shadow-lg 
-                 shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 
-                 text-sm px-6 py-2.5 text-center leading-5"
-                 onClick={() => onAnswer("Yes")}
-                >
-                    Yes
-                </button>
-
-                <button ref={buttonRef} type="button" className="rounded-full text-white bg-[#9eab74]
-                hover:bg-[#556328] focus:ring-2 
-                 focus:outline-none focus:ring-[#556328] shadow-lg 
-                 shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 
-                 text-sm px-6 py-2.5 text-center leading-5 transition-transform duration-500 ease-out"
-                 onClick={() => onAnswer("No")}
-                 style={{transform: `translate(${offset.x}px, ${offset.y}px)`}} 
-                >
-                    No
-                </button>
+                    <button ref={buttonRef} type="button" className="rounded-full text-white bg-[#9eab74]
+                    hover:bg-[#556328] focus:ring-2 
+                    focus:outline-none focus:ring-[#556328] shadow-lg 
+                    shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-base 
+                    text-sm px-6 py-2.5 text-center leading-5 transition-transform duration-500 ease-out"
+                    onClick={() => {
+                        if (noCount < noMessages.length){
+                            setNoCount(prev => prev + 1);
+                        }
+                        else{
+                            onAnswer("No")
+                        }
+                    }}
+                    style={{transform: `translate(${offset.x}px, ${offset.y}px)`}} 
+                    >
+                        No
+                    </button>
+                </div>
             </div>
         </div>
+    
     );
 }
