@@ -11,7 +11,7 @@ Try it out [here](https://will-you-be-my-web-valentine.vercel.app/)
 ## ⚙️ Environment Variables
 ### Create a .env.local file:
 ```
-NEXT_PUBLIC_SITE_HASH_VALUE=your_sha256_hash_here
+NEXT_PUBLIC_SITE_HASH_VALUE = your_sha256_hash_here
 ```
 The stored value should be the SHA-256 hash of the password.
 
