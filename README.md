@@ -5,7 +5,7 @@
 A small Next.js web application built for a fun, interactive Valentine experience.  
 The app includes a secret "soft" authentication system and playful animations, deployed on **Vercel**.
 
-Try it out [here](https://will-you-be-my-web-valentine.vercel.app/)
+[Link to App](https://will-you-be-my-web-valentine.vercel.app/)
 ```Hint: 0A/01/7E8```
 
 ## ⚙️ Environment Variables
